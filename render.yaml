@@ -1,8 +1,7 @@
 services:
   - type: web
     name: learneasy-api
-    env: java
+    env: docker
     branch: master
-    buildCommand: "./mvnw clean install"
-    startCommand: "java -jar target/*.jar"
     plan: free
+    dockerfilePath: Dockerfile
