@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: learneasy-api
+    env: docker
+    branch: master
+    plan: free
+    dockerfilePath: Dockerfile
