@@ -1,0 +1,44 @@
+package com.leaneasy.learneasyapi.Service;
+
+import com.leaneasy.learneasyapi.Model.Usuario;
+import com.leaneasy.learneasyapi.Repository.UsuarioRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Service
+public class UsuarioService {
+
+    private final UsuarioRepository repo;
+    private final PasswordEncoder passwordEncoder;
+
+    public UsuarioService(UsuarioRepository repo, PasswordEncoder passwordEncoder) {
+        this.repo = repo;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public List<Usuario> listarTodos() {
+        return repo.findAll();
+    }
+
+    public Usuario guardar(Usuario usuario) {
+        if (usuario.getPassword() != null) {
+            String encodedPassword = passwordEncoder.encode(usuario.getPassword());
+            usuario.setPassword(encodedPassword);
+        }
+        usuario.setFechaRegistro(LocalDateTime.now());
+        return repo.save(usuario);
+    }
+
+
+
+    public Usuario buscarPorId(Integer id) {
+        return repo.findById(id).orElse(null);
+    }
+
+    public void eliminarPorId(Integer id) {
+        repo.deleteById(id);
+    }
+}
