@@ -31,7 +31,10 @@ public class UsuarioService {
         usuario.setFechaRegistro(LocalDateTime.now());
         return repo.save(usuario);
     }
-
+    //Login busca por id y la contraseña
+    public Usuario login(String email, String password) {
+        return repo.findByEmail(email).filter(usuario -> passwordEncoder.matches(password, usuario.getPassword())).orElse(null);
+    }
 
 
     public Usuario buscarPorId(Integer id) {

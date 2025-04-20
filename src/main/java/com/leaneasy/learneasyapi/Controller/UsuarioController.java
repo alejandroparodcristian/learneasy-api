@@ -1,7 +1,11 @@
 package com.leaneasy.learneasyapi.Controller;
 
+import com.leaneasy.learneasyapi.DTO.LoginRequest;
+import com.leaneasy.learneasyapi.DTO.UsuarioDTO;
 import com.leaneasy.learneasyapi.Model.Usuario;
 import com.leaneasy.learneasyapi.Service.UsuarioService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,4 +39,21 @@ public class UsuarioController {
     public void eliminar(@PathVariable Integer id) {
         servicio.eliminarPorId(id);
     }
+    //Login usuario
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        Usuario usuario = servicio.login(request.getEmail(), request.getPassword());
+        if (usuario != null) {
+            UsuarioDTO dto = new UsuarioDTO(
+                    usuario.getId(),
+                    usuario.getNombre(),
+                    usuario.getEmail(),
+                    usuario.getFechaRegistro()
+            );
+            return ResponseEntity.ok(dto);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
+        }
+    }
+
 }
