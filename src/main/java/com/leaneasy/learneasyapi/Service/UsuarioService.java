@@ -24,13 +24,12 @@ public class UsuarioService {
     }
 
     public Usuario guardar(Usuario usuario) {
-        if (usuario.getPassword() != null) {
-            String encodedPassword = passwordEncoder.encode(usuario.getPassword());
-            usuario.setPassword(encodedPassword);
+        if (!usuario.getPassword().startsWith("$2a$")) {
+            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         }
-        usuario.setFechaRegistro(LocalDateTime.now());
         return repo.save(usuario);
     }
+
     //Login busca por id y la contraseña
     public Usuario login(String email, String password) {
         return repo.findByEmail(email).filter(usuario -> passwordEncoder.matches(password, usuario.getPassword())).orElse(null);
