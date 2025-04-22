@@ -17,6 +17,8 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String fotoUrl;
+
     private String nombre;
 
     private String email;

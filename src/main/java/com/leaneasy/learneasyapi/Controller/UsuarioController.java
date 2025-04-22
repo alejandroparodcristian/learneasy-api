@@ -7,7 +7,12 @@ import com.leaneasy.learneasyapi.Service.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 @RestController
@@ -55,5 +60,19 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
         }
     }
+
+    @PutMapping("/{id}/foto")
+    public ResponseEntity<?> actualizarFoto(@PathVariable Integer id, @RequestBody String fotoUrl) {
+        Usuario usuario = servicio.buscarPorId(id);
+        if (usuario == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        usuario.setFotoUrl(fotoUrl.replace("\"", "")); // elimina comillas si vienen en el JSON
+        servicio.guardar(usuario);
+
+        return ResponseEntity.ok("Foto actualizada");
+    }
+
 
 }
