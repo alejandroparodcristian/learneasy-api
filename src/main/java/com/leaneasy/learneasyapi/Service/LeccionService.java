@@ -39,4 +39,9 @@ public class LeccionService {
     public void eliminar(int id) {
         repo.deleteById(id);
     }
+    public List<Leccion> listarPorIdioma(int idIdioma) {
+        Idioma idioma = idiomaRepo.findById(idIdioma)
+                .orElseThrow(() -> new IllegalArgumentException("Idioma no encontrado"));
+        return repo.findByIdioma(idioma);
+    }
 }

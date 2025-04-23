@@ -35,4 +35,8 @@ public class LeccionController {
     public void eliminar(@PathVariable int id) {
         servicio.eliminar(id);
     }
+    @GetMapping("/por-idioma/{idIdioma}")
+    public List<Leccion> obtenerPorIdioma(@PathVariable int idIdioma) {
+        return servicio.listarPorIdioma(idIdioma);
+    }
 }
