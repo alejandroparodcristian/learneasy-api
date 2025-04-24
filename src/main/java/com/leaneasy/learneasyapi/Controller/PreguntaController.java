@@ -2,6 +2,7 @@ package com.leaneasy.learneasyapi.Controller;
 
 import com.leaneasy.learneasyapi.Model.Pregunta;
 import com.leaneasy.learneasyapi.Service.PreguntaService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,4 +36,17 @@ public class PreguntaController {
     public void eliminar(@PathVariable int id) {
         servicio.eliminar(id);
     }
+
+    @GetMapping("/por-leccion/{leccionId}")
+    public ResponseEntity<Pregunta> obtenerPreguntaPorLeccionYTipo(
+            @PathVariable int leccionId,
+            @RequestParam String tipo
+    ) {
+        return servicio.obtenerPorLeccionYTipo(leccionId, tipo)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+
+
 }

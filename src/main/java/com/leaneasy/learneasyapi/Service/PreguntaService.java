@@ -5,6 +5,7 @@ import com.leaneasy.learneasyapi.Repository.PreguntaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PreguntaService {
@@ -30,4 +31,8 @@ public class PreguntaService {
     public void eliminar(int id) {
         repo.deleteById(id);
     }
+    public Optional<Pregunta> obtenerPorLeccionYTipo(int leccionId, String tipo) {
+        return repo.findByLeccionIdAndTipo(leccionId, tipo);
+    }
+
 }
