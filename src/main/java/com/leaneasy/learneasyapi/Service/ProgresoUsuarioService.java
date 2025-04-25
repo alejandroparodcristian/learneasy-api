@@ -30,4 +30,8 @@ public class ProgresoUsuarioService {
     public void eliminar(int id) {
         repo.deleteById(id);
     }
+
+    public List<ProgresoUsuario> buscarPorUsuarioLeccionYJuego(int usuarioId, int leccionId, int juegoId) {
+        return repo.findByUsuarioIdAndLeccionIdAndJuegoId(usuarioId, leccionId, juegoId);
+    }
 }

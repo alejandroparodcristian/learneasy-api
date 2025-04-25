@@ -26,6 +26,17 @@ public class ProgresoUsuarioController {
         return servicio.guardar(progreso);
     }
 
+    @PutMapping("/{id}")
+    public ProgresoUsuario actualizar(@PathVariable int id, @RequestBody ProgresoUsuario actualizado) {
+        ProgresoUsuario existente = servicio.obtenerPorId(id);
+        if (existente != null) {
+            actualizado.setId(id);
+            return servicio.guardar(actualizado);
+        } else {
+            return null;
+        }
+    }
+
     @GetMapping("/{id}")
     public ProgresoUsuario obtener(@PathVariable int id) {
         return servicio.obtenerPorId(id);
@@ -34,5 +45,13 @@ public class ProgresoUsuarioController {
     @DeleteMapping("/{id}")
     public void eliminar(@PathVariable int id) {
         servicio.eliminar(id);
+    }
+
+    @GetMapping("/buscar")
+    public List<ProgresoUsuario> buscarPorUsuarioLeccionYJuego(
+            @RequestParam int usuarioId,
+            @RequestParam int leccionId,
+            @RequestParam int juegoId) {
+        return servicio.buscarPorUsuarioLeccionYJuego(usuarioId, leccionId, juegoId);
     }
 }

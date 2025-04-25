@@ -27,10 +27,26 @@ public class ProgresoUsuario {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Leccion leccion;
 
-
-    private LocalDateTime fecha;
+    @ManyToOne
+    @JoinColumn(name = "juego_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Juego juego;
 
     private boolean completado;
 
     private int puntos;
+
+    private String tipoJuego;
+
+    @Column(columnDefinition = "TEXT")
+    private String estadoPartida;
+
+    private LocalDateTime fecha;
+
+    @PrePersist
+    public void prePersist() {
+        if (fecha == null) {
+            fecha = LocalDateTime.now();
+        }
+    }
 }
