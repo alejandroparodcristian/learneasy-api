@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-public class ProgresoUsuario {
+public class ProgresoUsuario {  
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
