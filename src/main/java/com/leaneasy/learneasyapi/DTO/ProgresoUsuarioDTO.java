@@ -11,6 +11,7 @@ public class ProgresoUsuarioDTO {
     private int juegoId;
     private boolean completado;
     private int puntos;
+    private String dificultad;
     private String tipoJuego;
     private String estadoPartida;
 }

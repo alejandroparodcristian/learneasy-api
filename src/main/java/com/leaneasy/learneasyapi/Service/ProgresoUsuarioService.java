@@ -31,11 +31,10 @@ public class ProgresoUsuarioService {
         repo.deleteById(id);
     }
 
-    public List<ProgresoUsuario> buscarPorUsuarioLeccionYJuego(int usuarioId, int leccionId, int juegoId) {
-        return repo.findByUsuarioIdAndLeccionIdAndJuegoId(usuarioId, leccionId, juegoId);
+
+    public ProgresoUsuario buscarProgreso(int usuarioId, int leccionId, int juegoId, String dificultad) {
+        return repo.findByUsuarioIdAndLeccionIdAndJuegoIdAndDificultad(usuarioId, leccionId, juegoId, dificultad);
     }
-    public ProgresoUsuario buscarUltimoProgreso(int usuarioId, int leccionId, int juegoId) {
-        return repo.findTopByUsuarioIdAndLeccionIdAndJuegoIdOrderByFechaDesc(usuarioId, leccionId, juegoId);
-    }
+
 
 }

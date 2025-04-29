@@ -54,18 +54,6 @@ public class ProgresoUsuarioController {
         servicio.eliminar(id);
     }
 
-    @GetMapping("/buscar")
-    public ResponseEntity<ProgresoUsuario> buscarPorUsuarioLeccionYJuego(
-            @RequestParam int usuarioId,
-            @RequestParam int leccionId,
-            @RequestParam int juegoId) {
-        ProgresoUsuario progreso = servicio.buscarUltimoProgreso(usuarioId, leccionId, juegoId);
-        if (progreso == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(progreso);
-    }
-
 
     @PostMapping
     public ResponseEntity<ProgresoUsuario> guardarProgreso(@RequestBody ProgresoUsuarioDTO dto) {
@@ -85,6 +73,8 @@ public class ProgresoUsuarioController {
         progreso.setPuntos(dto.getPuntos());
         progreso.setTipoJuego(dto.getTipoJuego());
         progreso.setEstadoPartida(dto.getEstadoPartida());
+        progreso.setDificultad(dto.getDificultad()); //  AÑADIDO
+
 
         ProgresoUsuario guardado = progresoUsuarioRepository.save(progreso);
 
@@ -115,9 +105,25 @@ public class ProgresoUsuarioController {
         existente.setPuntos(dto.getPuntos());
         existente.setTipoJuego(dto.getTipoJuego());
         existente.setEstadoPartida(dto.getEstadoPartida());
+        existente.setDificultad(dto.getDificultad());
+
 
         ProgresoUsuario actualizado = progresoUsuarioRepository.save(existente);
 
         return ResponseEntity.ok(actualizado);
     }
+
+    @GetMapping("/buscar")
+    public ResponseEntity<ProgresoUsuario> buscarProgreso(@RequestParam int usuarioId,
+                                                          @RequestParam int leccionId,
+                                                          @RequestParam int juegoId,
+                                                          @RequestParam String dificultad) {
+        ProgresoUsuario progreso = servicio.buscarProgreso(usuarioId, leccionId, juegoId, dificultad);
+        if (progreso != null) {
+            return ResponseEntity.ok(progreso);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

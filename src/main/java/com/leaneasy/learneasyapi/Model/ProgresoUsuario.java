@@ -1,42 +1,42 @@
 package com.leaneasy.learneasyapi.Model;
 
+
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
-public class ProgresoUsuario {  
+@NoArgsConstructor
+public class ProgresoUsuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
     @ManyToOne
-    @JoinColumn(name = "leccion_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "leccion_id")
     private Leccion leccion;
 
     @ManyToOne
     @JoinColumn(name = "juego_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Juego juego;
 
-    private boolean completado;
+    private String tipoJuego;
+
+    private String dificultad; // ✅ NUEVO CAMPO
 
     private int puntos;
 
-    private String tipoJuego;
+    private boolean completado;
 
     @Column(columnDefinition = "TEXT")
     private String estadoPartida;
@@ -45,8 +45,6 @@ public class ProgresoUsuario {
 
     @PrePersist
     public void prePersist() {
-        if (fecha == null) {
-            fecha = LocalDateTime.now();
-        }
+        this.fecha = LocalDateTime.now();
     }
 }
