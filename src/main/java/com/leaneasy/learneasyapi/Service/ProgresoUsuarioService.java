@@ -34,4 +34,8 @@ public class ProgresoUsuarioService {
     public List<ProgresoUsuario> buscarPorUsuarioLeccionYJuego(int usuarioId, int leccionId, int juegoId) {
         return repo.findByUsuarioIdAndLeccionIdAndJuegoId(usuarioId, leccionId, juegoId);
     }
+    public ProgresoUsuario buscarUltimoProgreso(int usuarioId, int leccionId, int juegoId) {
+        return repo.findTopByUsuarioIdAndLeccionIdAndJuegoIdOrderByFechaDesc(usuarioId, leccionId, juegoId);
+    }
+
 }

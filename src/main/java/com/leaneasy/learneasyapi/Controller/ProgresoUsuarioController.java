@@ -55,12 +55,17 @@ public class ProgresoUsuarioController {
     }
 
     @GetMapping("/buscar")
-    public List<ProgresoUsuario> buscarPorUsuarioLeccionYJuego(
+    public ResponseEntity<ProgresoUsuario> buscarPorUsuarioLeccionYJuego(
             @RequestParam int usuarioId,
             @RequestParam int leccionId,
             @RequestParam int juegoId) {
-        return servicio.buscarPorUsuarioLeccionYJuego(usuarioId, leccionId, juegoId);
+        ProgresoUsuario progreso = servicio.buscarUltimoProgreso(usuarioId, leccionId, juegoId);
+        if (progreso == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(progreso);
     }
+
 
     @PostMapping
     public ResponseEntity<ProgresoUsuario> guardarProgreso(@RequestBody ProgresoUsuarioDTO dto) {
