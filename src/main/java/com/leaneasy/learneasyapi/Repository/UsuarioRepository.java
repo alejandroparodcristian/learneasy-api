@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     //Uso para el login encuentra por id pq es único
     Optional<Usuario> findByEmail(String email);
+    boolean existsByEmail(String email);
+
 }

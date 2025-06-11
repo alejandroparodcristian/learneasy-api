@@ -7,15 +7,9 @@ import com.leaneasy.learneasyapi.Service.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -33,8 +27,12 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public Usuario guardar(@RequestBody Usuario usuario) {
-        return servicio.guardar(usuario);
+    public ResponseEntity<?> guardar(@RequestBody Usuario usuario) {
+        if (servicio.correoExiste(usuario.getEmail())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Correo ya registrado");
+        }
+        Usuario guardado = servicio.guardar(usuario);
+        return ResponseEntity.ok(guardado);
     }
 
     @GetMapping("/{id}")

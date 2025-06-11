@@ -52,7 +52,9 @@ public class UsuarioService {
         return repo.save(usuario);
     }
 
-
+    public boolean correoExiste(String email) {
+        return repo.existsByEmail(email);
+    }
 
     public Usuario buscarPorId(Integer id) {
         return repo.findById(id).orElse(null);
