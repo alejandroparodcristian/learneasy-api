@@ -44,6 +44,15 @@ public class UsuarioService {
         return repo.findByEmail(email).filter(usuario -> passwordEncoder.matches(password, usuario.getPassword())).orElse(null);
     }
 
+    public Usuario actualizarNombre(Integer id, String nuevoNombre) {
+        Usuario usuario = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        usuario.setNombre(nuevoNombre);
+        return repo.save(usuario);
+    }
+
+
 
     public Usuario buscarPorId(Integer id) {
         return repo.findById(id).orElse(null);

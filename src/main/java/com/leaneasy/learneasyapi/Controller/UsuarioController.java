@@ -14,6 +14,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -39,6 +41,24 @@ public class UsuarioController {
     public Usuario buscarPorId(@PathVariable Integer id) {
         return servicio.buscarPorId(id);
     }
+
+    @PutMapping("/{id}/nombre")
+    public ResponseEntity<UsuarioDTO> actualizarNombre(@PathVariable Integer id, @RequestBody Map<String, String> body) {
+        String nuevoNombre = body.get("nombre");
+        Usuario usuario = servicio.actualizarNombre(id, nuevoNombre);
+
+        UsuarioDTO dto = new UsuarioDTO(
+                usuario.getId(),
+                usuario.getNombre(),
+                usuario.getEmail(),
+                usuario.getFechaRegistro()
+        );
+
+        return ResponseEntity.ok(dto);
+    }
+
+
+
 
     @DeleteMapping("/{id}")
     public void eliminar(@PathVariable Integer id) {
