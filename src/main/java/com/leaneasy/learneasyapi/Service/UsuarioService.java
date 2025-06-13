@@ -1,5 +1,6 @@
 package com.leaneasy.learneasyapi.Service;
 
+import com.leaneasy.learneasyapi.DTO.UsuarioDTO;
 import com.leaneasy.learneasyapi.Model.Usuario;
 import com.leaneasy.learneasyapi.Repository.UsuarioRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -58,6 +60,22 @@ public class UsuarioService {
 
     public Usuario buscarPorId(Integer id) {
         return repo.findById(id).orElse(null);
+    }
+
+    public UsuarioDTO convertirADTO(Usuario usuario) {
+        return new UsuarioDTO(usuario.getId(), usuario.getNombre(), usuario.getEmail(), usuario.getFechaRegistro());
+    }
+
+    public List<UsuarioDTO> buscarPorNombre(String nombre) {
+        List<Usuario> usuariosEncontrados = repo.findByNombreContainingIgnoreCase(nombre);
+        List<UsuarioDTO> resultado = new ArrayList<>();
+
+        for (Usuario usuario : usuariosEncontrados) {
+            UsuarioDTO dto = convertirADTO(usuario);
+            resultado.add(dto);
+        }
+
+        return resultado;
     }
 
     public void eliminarPorId(Integer id) {

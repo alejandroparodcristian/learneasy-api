@@ -55,6 +55,10 @@ public class UsuarioController {
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("/buscar")
+    public ResponseEntity<List<UsuarioDTO>> buscarPorNombre(@RequestParam String nombre) {
+        return ResponseEntity.ok(servicio.buscarPorNombre(nombre));
+    }
 
 
 
