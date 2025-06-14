@@ -32,7 +32,7 @@ public class ProgresoUsuario {
 
     private String tipoJuego;
 
-    private String dificultad; // ✅ NUEVO CAMPO
+    private String dificultad;
 
     private int puntos;
 
